@@ -23,4 +23,15 @@ np arquivo package.json criamos a chave na sessao script
 ! somente o start que roda sem a utilização do run
 Ex: npm start e npm run dev ou npm run server
 
+// instalação de pacote global
+* npm install -g <pacote>
+! dependendo do pacote e necessario fazer um link para termos acesso aos arquivos dele
+* npm link <pacote>
+// Alguns pacotes são scripts executáveis, que resultam em alguma ação 
+// no nosso computador;
+* Como por exemplo a instalação do React, que é feita pelo npx
+Ex: npx cowsay "text"
+
+// Para remover um pacote utilizamos o comando: 
+* npm uninstall <pacote>
 */
