@@ -29,8 +29,16 @@ function operation() {
       // console.log(answer)
       // aqui verifica qual ação foi escolhida
       const action = answer["action"];
+      // criação das açoes que irao ser executadas
       if (action == "Criar Conta") {
         createAccount();
+      } else if (action === "Depositar") {
+        deposit();
+      } else if (action === "Consultar Saldo") {
+      } else if (action === "Sacar") {
+      } else if (action === "Sair") {
+        console.log(chalk.bgRed.black("Obrigado por usar o Accounts!"));
+        process.exit(); // process.exit() encerra o programa
       }
       //   console.log(action)
     })
@@ -56,9 +64,9 @@ function buildAccount() {
     ])
     .then((answer) => {
       const accountName = answer["accountName"];
-    //   console.info(
-    //     chalk.bgBlue.white(`Conta ${accountName}, 'Criada com sucesso!'`)
-    //   );
+      //   console.info(
+      //     chalk.bgBlue.white(`Conta ${accountName}, 'Criada com sucesso!'`)
+      //   );
 
       // verificando se existe diretorio
       if (!fs.existsSync("accounts")) {
@@ -92,4 +100,38 @@ function buildAccount() {
     .catch((err) => {
       console.log(err);
     });
+}
+
+// add an amount to user account
+function deposit() {
+  inquirer.prompt([
+    {
+      name: "accountName",
+      message: "Qual o nome da sua conta?",
+    }
+  ])
+  .then((answer) => {
+    const accountName = answer["accountName"];
+  
+    // verify if account exists
+    if (!checkAccounts(accountName)) {
+      return deposit();
+    }
+
+    
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+}
+
+function checkAccounts(accountName) {
+  // verifica se a conta existe
+  if (!fs.existsSync(`accounts/${accountName}.json`)) {
+    console.log(
+      chalk.bgRed.black("Esta conta não existe, verifique o nome digitado")
+    );
+    return false;
+  }
+  return true;
 }
