@@ -35,7 +35,9 @@ function operation() {
 			} else if (action === "Depositar") {
 				deposit();
 			} else if (action === "Consultar Saldo") {
+				getAccountBalance();
 			} else if (action === "Sacar") {
+				widthdraw();
 			} else if (action === "Sair") {
 				console.log(chalk.bgRed.black("Obrigado por usar o Accounts!"));
 				process.exit(); // process.exit() encerra o programa
@@ -133,8 +135,8 @@ function deposit() {
 					const amount = answer["amount"];
 
 					// add amount
-          addAmount(accountName, amount)
-          operation()
+					addAmount(accountName, amount);
+					operation();
 				})
 				.catch((err) => {
 					console.log(err);
@@ -159,15 +161,143 @@ function checkAccounts(accountName) {
 }
 
 function addAmount(accountName, amount) {
-  const account = getAccount(accountName)
-  console.log(account)
+	const accountData = getAccount(accountName);
+	// console.log(accountData, "balance addAmount");
+
+	if (!amount) {
+		console.log(
+			chalk.bgRed.black("Ocorreu um erro, tente novamente mais tarde!")
+		);
+		return;
+	}
+
+	accountData.balance = parseFloat(amount) + parseFloat(accountData.balance);
+
+	// adicionando os dados no arquivo
+	fs.writeFileSync(
+		`accounts/${accountName}.json`,
+		JSON.stringify(accountData),
+		function (err) {
+			// callback para pegar algum erro
+			console.log(err);
+		}
+	);
+
+	console.log(
+		chalk.green(
+			`Foi depositado o valor de ${amount} realizado com sucesso!`
+		)
+	);
 }
 
 function getAccount(accountName) {
 	const accountJSON = fs.readFileSync(`accounts/${accountName}.json`, {
 		encoding: "utf8",
-    flag: 'r'
+		flag: "r", // essa flag significa que sera somente leitura
 	});
 
-  return JSON.parse(accountJSON)
+	return JSON.parse(accountJSON);
+}
+
+// show account balance
+function getAccountBalance() {
+	inquirer
+		.prompt([
+			{
+				name: "accountName",
+				message: "Qual o nome da sua conta?",
+			},
+		])
+		.then((answer) => {
+			const accountName = answer["accountName"];
+
+			// verify if account exists
+			if (!checkAccounts(accountName)) {
+				return getAccountBalance();
+			}
+
+			const accountData = getAccount(accountName);
+			console.log(
+				chalk.bgBlue.black(`Seu Saldo é de R$ ${accountData.balance}`)
+			);
+			operation();
+		})
+		.catch((err) => console.log(err));
+}
+
+// widthdraw an amount
+function widthdraw() {
+	inquirer
+		.prompt([
+			{
+				name: "accountName",
+				message: "Qual o nome da sua conta?",
+			},
+		])
+		.then((answer) => {
+			const accountName = answer["accountName"];
+			// verify if account exists
+			if (!checkAccounts(accountName)) {
+				return widthdraw();
+			}
+
+			inquirer
+				.prompt([
+					{
+						name: "amount",
+						message: "Quanto você deseja sacar?",
+					},
+				])
+				.then((answer) => {
+					const amount = answer["amount"];
+
+					removeAmount(accountName, amount);
+
+					// // verifica se tem saldo
+					// const accountData = getAccount(accountName);
+					// if (accountData.balance === 0) {
+					// 	console.log(
+					// 		chalk.bgRed.black(
+					// 			"Você não tem saldo suficiente para realizar esta operação!"
+					// 		)
+					// 	);
+					// 	return operation();
+					// }
+				})
+				.catch((err) => console.log(err));
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+}
+
+function removeAmount(accountName, amount) {
+	const accountData = getAccount(accountName);
+
+	// verificar se existe valor no amount
+	if (!amount) {
+		console.log(
+			chalk.bgRed.black("Ocorreu um erro, tente novamente mais tarde!")
+		);
+		return widthdraw();
+	}
+
+	if (accountData.balance < amount || accountData.balance === 0) {
+		console.log(chalk.bgRed.black("Valor indisponivél!"));
+		return widthdraw();
+	}
+
+	accountData.balance = parseFloat(accountData.balance) - parseFloat(amount);
+	// adicionando os dados no arquivo
+	fs.writeFileSync(
+		`accounts/${accountName}.json`,
+		JSON.stringify(accountData),
+		function (err) {
+			// callback para pegar algum erro
+			console.log(err);
+		}
+	);
+
+	console.log(chalk.green(`Foi realizado um saque de R$${amount} da sua conta!`))
+	operation();
 }
