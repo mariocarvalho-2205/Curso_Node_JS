@@ -12,11 +12,11 @@ router.post('/save', (req, res) => {
     const idade = req.body.idade
     console.log(`O Usuario ${nome} tem ${idade} anos`)
 
-    res.sendFile(`${baseUrl}/userCadastrado.html`)
+    res.sendFile(`${baseUrl}/user/userCadastrado.html`)
 })
 
 router.get('/add', (req, res) => {
-    res.sendFile(`${baseUrl}/userForm.html`)
+    res.sendFile(`${baseUrl}/user/userForm.html`)
 })
 
 router.get('/:id', (req, res) => {
