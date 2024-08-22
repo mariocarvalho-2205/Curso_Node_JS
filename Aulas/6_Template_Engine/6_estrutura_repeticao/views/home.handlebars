@@ -1,0 +1,7 @@
+<H1>Faça o login para acessar</H1>
+{{#if auth}}
+    <h2>Olá {{user.name}} {{user.sobrenome}}</h2>
+    <a href="/dashboard">Acessar sistema</a>
+    {{else}}
+    <h2>Você não está logado!!</h2>
+{{/if}}

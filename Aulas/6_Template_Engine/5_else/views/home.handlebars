@@ -1,0 +1,9 @@
+<h1>Else Handlebars</h1>
+{{#if auth}}
+	<h2>{{{pessoa.nome}}}
+		Você está autenticado, sua idade é
+		{{{pessoa.idade}}}</h2>
+	<a href="dashboard">Acessar Sistema</a>
+	{{else}}
+	<h2>Faça login para acessar o sistema</h2>
+{{/if}}
