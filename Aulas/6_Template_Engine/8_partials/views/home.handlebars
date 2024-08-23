@@ -1,0 +1,8 @@
+<h1>Home With</h1>
+{{#if auth}}
+    <h2>Bem vindo de volta {{user.nome}}</h2>
+    <a href="/dashboard">Acessar</a>
+    {{else}}
+    <h3>Você precisa estar logado</h3>
+
+{{/if}}

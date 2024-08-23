@@ -1,0 +1,10 @@
+{{#if auth}}
+<h1>Post</h1>
+{{#with post}}
+    <h3>{{title}}</h3>
+    <h4>{{categoria}}</h4>
+    <h4>{{body}}</h4>
+    <h4>{{comments}}</h4>
+{{/with}}
+<a href="/dashboard">Voltar</a>
+{{/if}}

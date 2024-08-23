@@ -1,0 +1,9 @@
+{{#if auth}}
+  <h2>Olá {{user.nome}}</h2>
+  <a href="/clients">Verificar Clientes</a>
+  <a href="/blogpost">Blog</a>
+  <a href="/">Sair</a>
+{{else}}
+  <h2>Você precisa estar logado</h2>
+  <a href="/">Sair</a>
+{{/if}}

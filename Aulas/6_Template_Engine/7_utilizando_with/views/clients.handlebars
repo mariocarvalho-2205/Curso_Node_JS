@@ -1,0 +1,14 @@
+{{#if auth}}
+<h2>Clientes cadastrados</h2>
+<ul>
+  {{#each clients}}
+  <li>Nome: {{this}}</li>
+  
+  {{/each}}
+
+</ul>
+<a href="/dashboard">Voltar</a>
+{{else}}
+<h2>Você não esta logado</h2>
+<a href="/">Voltar</a>
+{{/if}}
