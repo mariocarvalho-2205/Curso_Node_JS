@@ -1,0 +1,9 @@
+<h1>Lista de fabricantes</h1>
+{{#if auth}}
+    {{#each list}}
+        <ul>
+            <li>{{this}}</li>
+        </ul>
+    {{/each}}
+    <a href="/dashboard">Dashboard</a>
+{{/if}}

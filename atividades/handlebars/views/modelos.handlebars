@@ -1,0 +1,9 @@
+<h1>Modelos disponiveis</h1>
+
+{{#each modelos}}
+<ul>
+    <li>{{this.marca}}</li>
+    <a href="/carros/{{this.id}}">Ver detalhes</a>
+</ul>
+{{/each}}
+<a href="/dashboard">Dashboard</a>
