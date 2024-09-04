@@ -2,6 +2,7 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const app = express()
 const mysql = require('mysql')
+
 const port = 3000
 
 app.use(express.urlencoded({
@@ -47,7 +48,7 @@ app.get('/books', (req, res) => {
 
         const books = data
         console.log(books)
-        res.redirect('/books', {books})
+        res.render('books', {books})
     })
 })
 
