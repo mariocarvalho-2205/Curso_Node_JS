@@ -19,6 +19,7 @@ app.use(express.static('public'))
 app.get('/', (req, res) => {
     res.render('home')
 })
+
 app.post('/books/insertbook/', (req, res) => {
     const title = req.body.title
     const pageqty = req.body.pageqty
@@ -35,8 +36,24 @@ app.post('/books/insertbook/', (req, res) => {
 
 })
 
-app.get('/books', (req, res) => {
+app.get('/books/:id', (req, res) => {
+    const id = req.params.id
 
+    const query = `SELECT * FROM books WHERE id = ${id}`
+
+    conn.query(query, function (err, data) {
+        if (err) {
+            console.log(err)
+            return
+        }
+
+        const book = data[0]
+
+        res.render('book', {book})
+    })
+})
+
+app.get('/books', (req, res) => {
 
     const sql = "SELECT * FROM books"
 
@@ -51,8 +68,6 @@ app.get('/books', (req, res) => {
         res.render('books', {books})
     })
 })
-
-
 
 
 const conn = mysql.createConnection({
