@@ -1,0 +1,9 @@
+<h1>Lista de livros</h1>
+{{#each books}}
+    <div class="books">
+            <h3>{{this.id}} - Titulo: {{this.title}}</h3>
+            <p>Numero de paginas: {{this.pageqty}}</p>
+            <a class="detail" href="/book/{{this.id}}">Detalhes</a>
+    </div>
+{{/each}}
+<a href="/">Home</a>

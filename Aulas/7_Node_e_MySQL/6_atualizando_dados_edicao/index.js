@@ -63,12 +63,26 @@ app.get('/edit/:id', (req, res) => {
     })
 })
 
-app.post('/editbook/:id', (req, res) => {
-    const id = req.params.id
-    console.log(id)
+app.post('/editbook', (req, res) => {
+    const id = req.body.id
+    const title = req.body.title
+    const pageqty = req.body.pageqty
+    
+    
+    console.log(id, title, pageqty)
+    
+    
+    const query = `UPDATE books SET title = '${title}', pageqty = '${pageqty}' WHERE id = ${id}`
+    conn.query(query, function (err) {
+        if(err) {
+            console.log(err)
+            return
+        }
+    })
 
     res.redirect('/books')
 })
+
 app.post('/insert', (req, res) => {
     const title = req.body.title
     const pageqty = req.body.pageqty

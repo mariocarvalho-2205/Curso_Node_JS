@@ -1,0 +1,10 @@
+<h2>Livro escolhido</h2>
+<div class="book">
+    <h3>{{book.title}}</h3>
+    <p>Numero de paginas: {{book.pageqty}}</p>
+    <a href="/edit/{{book.id}}">Editar</a>
+    <form action="/remove/{{book.id}}" method="POST">
+        <input type="submit" value="Deletar">
+    </form>
+
+</div>
