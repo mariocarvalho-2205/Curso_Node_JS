@@ -17,12 +17,32 @@ app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))
 
+app.get('/', (req, res) => {
+    res.render('home')
+})
+
+app.post('/books/insertbook/', (req, res) => {
+    const title = req.body.title
+    const pageqty = req.body.pageqty
+
+    const query = `INSERT INTO books (title, pageqty) VALUE ('${title}', '${pageqty}')`
+
+    conn.query(query, function(err) {
+        if(err) {
+            console.log(err)
+            return
+        }
+
+        res.redirect('/books')
+    })
+})
+
 app.get('/books/:id', (req, res) => {
     const id = req.params.id
 
     const query = `SELECT * FROM books WHERE id = ${id}`
 
-    conn.query = (query, function(err, data) {
+    conn.query(query, function(err, data) {
         if (err) {
             console.log(err)
             return
@@ -49,10 +69,24 @@ app.get('/books', (req, res) => {
     })
 })
 
+// pegando dados para edição
+app.get('/books/edit/:id', (req, res) => {
+    const id = req.params.id
 
-app.get('/', (req, res) => {
-    res.render('home')
+    const query = `SELECT * FROM books WHERE id = ${id}`
+
+    conn.query(query, function(err, data) {
+        if(err) {
+            console.log(err)
+            return
+        }
+        const book = data[0]
+        console.log('Edição', book)
+        res.render('edit', {book})
+    })
+
 })
+
 
 const conn = mysql.createConnection({
     host: 'localhost',

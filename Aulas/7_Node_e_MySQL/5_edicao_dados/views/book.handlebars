@@ -1,10 +1,14 @@
-<div id="book-page"></div>
-  <h1>Livro escolhido</h1>
-  <div class="container">
-    <h2>{{book.title}}</h2>
-    <p>Este livro tem {{book.pageqty}} paginas</p>
-    <a href="/books">Voltar</a>
+<div id="book-page">
 
-  </div>
+	<h1>Livro escolhido</h1>
+	<div class="container">
+		<h2>{{book.title}}</h2>
+		<p>Este livro tem {{book.pageqty}} paginas</p>
+		<div class="actions">
+			<a href="/books/edit/{{book.id}}">Edit</a>
 
+		</div>
+		<a href="/books">Voltar</a>
+
+	</div>
 </div>

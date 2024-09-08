@@ -1,0 +1,8 @@
+<h3>Edite seu livro</h3>
+<form action="/editbook/{{editBook.id}}" method="POST">
+    <label for="edittitle">Titulo:</label>
+    <input type="text" id="edittitle" value="{{editBook.title}}">
+    <label for="editPage">Numero de paginas</label>
+    <input type="text" id="editPage" value="{{editBook.pageqty}}">
+    <input type="submit" value="Editar">
+</form>

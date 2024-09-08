@@ -1,85 +1,88 @@
 * {
-    background-color: rgb(141, 137, 137);
-    font-family: Helvetica;
-  }
-  
-  #navbar {
-    border-bottom: 1px solid #ccc;
-    padding: 1em;
-    margin-bottom: 1em;
-  }
-  
-  #navbar ul {
-    display: flex;
-    flex-direction: row;
-    gap: 50px;
-  }
-  
-  #navbar ul li {
-    list-style: none;
-  }
-  h1 {
-    color: rgb(68, 202, 207);
+  background-color: rgb(141, 137, 137);
+  font-family: Helvetica;
+}
+
+#navbar {
+  border-bottom: 1px solid #ccc;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+#navbar ul {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+}
+
+#navbar ul li {
+  list-style: none;
+}
+h1 {
+  color: rgb(68, 202, 207);
+  text-align: center;
+}
+
+.form, form,
+.books-container {
+  width: 450px;
+  margin: 0 auto;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5em;
+}
+
+.form-control label {
+  font-weight: bold;
+  margin-bottom: 0.3em;
+}
+
+.form-control input {
+  padding: 5px;
+}
+
+.books-container {
+  border-bottom: 1px solid #ccc;
+  padding: 5px;
+  margin: 3px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 20px;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+a:hover {
+  color: bisque;
+}
+
+#book-page {
+    padding: 4em;
+}
+
+#book-page h1 {
+    font-size: 4em;
+}
+
+#book-page h2 {
+    font-size: 3em;
+}
+
+#book-page p {
+    font-size: 2em;
+}
+
+#book-page .container {
     text-align: center;
-  }
-  
-  .form,
-  .books-container {
-    width: 450px;
-    margin: 0 auto;
-  }
-  
-  .form-control {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 0.5em;
-  }
-  
-  .form-control label {
-    font-weight: bold;
-    margin-bottom: 0.3em;
-  }
-  
-  .form-control input {
-    padding: 5px;
-  }
-  
-  .books-container {
-    border-bottom: 1px solid #ccc;
-    padding: 5px;
-    margin: 3px;
-  }
-  
-  a {
-    text-decoration: none;
-    font-size: 20px;
-    color: black;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  a:hover {
-    color: bisque;
-  }
-  
-  #book-page {
-      padding: 4em;
-  }
-  
-  #book-page h1 {
-      font-size: 4em;
-  }
-  
-  #book-page h2 {
-      font-size: 3em;
-  }
-  
-  #book-page p {
-      font-size: 2em;
-  }
-  
-  #book-page .container {
-      text-align: center;
-  
-  }
-  
+
+}
+
+.actions {
+  margin-bottom: 1em;
+}
