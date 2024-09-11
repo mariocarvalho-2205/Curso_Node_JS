@@ -1,0 +1,90 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Helvetica";
+	color: #fff;
+	background-color: #2e2e2e;
+}
+
+body {
+	display: flex;
+	text-align: center;
+	flex-direction: column;
+}
+
+h1 {
+    margin-bottom: 1rem;
+}
+
+nav {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #605d5d;
+}
+
+a {
+	text-decoration: none;
+	font-weight: bold;
+
+}
+
+a:hover {
+    color: bisque;
+}
+
+li {
+	list-style: none;
+}
+
+.books {
+    display: flex;
+    text-align: left;
+    gap: 1rem;
+    margin-bottom: 1em;
+}
+
+form {
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-control label {
+    margin-bottom: 0.5rem;
+    margin-left: 0;
+}
+
+.form-control input {
+    width: 200px;
+    margin-bottom: 2em;
+    padding: 0.3em;
+}
+
+.form-control input[type=submit] {
+    margin-top: 20px;
+    width: 150px;
+    background-color: antiquewhite;
+    color: #2e2e2e;
+    font-weight: bold;
+    padding: 8px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.form-control input[type=submit]:hover {
+    background-color: bisque;
+}
+
+.form-checkbox {
+    margin-top: 10px;
+    flex-direction: row;
+
+}
+
+.form-checkbox input {
+    margin-right: 1px;
+}
+.detail {
+    font-weight: 400;
+}
