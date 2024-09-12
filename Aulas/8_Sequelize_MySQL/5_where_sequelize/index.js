@@ -5,6 +5,7 @@ const port = 3000;
 const conn = require('./db/conn')
 const User = require('./models/User')
 
+
 app.use(
 	express.urlencoded({
 		extends: true,
@@ -18,52 +19,53 @@ app.set("view engine", "handlebars");
 
 app.use(express.static("public"));
 
-
-app.get('/users/create', (req, res) => {
-    res.render('adduser')
-})
-
 app.post('/users/create', async (req, res) => {
     const name = req.body.name
     const ocupation = req.body.ocupation
     let newsletter = req.body.newsletter
+    let error
 
-    console.log(name, ocupation, newsletter)
-    if(newsletter === 'on') {
+    if (newsletter === 'on') {
         newsletter = true
     } else {
         newsletter = false
     }
 
-    if (name !== '' || ocupation !== '') {
-        await User.create({name, ocupation, newsletter})
+    if ( name !== '' || ocupation !== '') {
+        await User.create({ name, ocupation, newsletter })
     } else {
-        console.log('Os campos nao podem estar em branco')
+        console.log('Os campos nao podem estar vazios')
     }
-
     res.redirect('/')
+})
 
+app.get('/users/create', (req, res) => {
+    res.render('adduser')
+})
+
+app.get('/users/:id', async (req, res) => {
+    const id = req.params.id
+
+    // resgata usuario com base no id
+    const user = await User.findOne({raw: true, where: { id: id}})
+
+    console.log(user)
+    res.render('userview', {user})
 })
 
 app.get("/", async (req, res) => {
-
-    // para recebermos os dados do banco precisamos fazer um fetch
-    const users = await User.findAll({ raw: true })
-
-    console.log(users)
-
-    // e passamos o users para a home
-    res.render("home", {users: users});
+    const users = await User.findAll({raw: true})
+	res.render("home", {users});
 });
-
 
 conn.sync()
 .then(() => {
     app.listen(port, () => {
-        console.log(`lendo sequelize na porta ${port}`);
+        console.log(`Where rodando na porta ${port}`);
     });
 
 })
-.catch ((err) => {
-    console.log('Não foi possivel conectar ao mysql')
+.catch((err) => {
+    console.log('Não foi possivel conectar')
 })
+

@@ -17,6 +17,10 @@ h1 {
     margin-bottom: 1rem;
 }
 
+h2 {
+    margin-bottom: 1em;
+}
+
 nav {
     margin-bottom: 1rem;
     border-bottom: 1px solid #605d5d;
@@ -77,4 +81,21 @@ form input[type=submit]:hover {
 
 .detail {
     font-weight: 400;
+}
+
+/* Users */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 1200px;
+    margin: 0 auto;
+    gap: 10px;
+
+}
+
+.item {
+    border: 1px solid #fff;
+    border-radius: 5px;
+    padding: 20px;
+    flex: 1 1 29%;
 }
