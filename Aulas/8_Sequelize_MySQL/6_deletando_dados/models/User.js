@@ -9,7 +9,7 @@ const User = conn.define('User', {
     },
     ocupation: {
         type: DataTypes.STRING,
-        require: true
+        require: true,
     },
     newsletter: {
         type: DataTypes.BOOLEAN
