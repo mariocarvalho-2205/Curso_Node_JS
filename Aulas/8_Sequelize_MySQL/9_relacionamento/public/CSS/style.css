@@ -1,0 +1,149 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Helvetica";
+  color: #fff;
+  background-color: #2e2e2e;
+}
+
+body {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+}
+
+h1 {
+  margin-bottom: 1rem;
+}
+
+h2 {
+  margin-bottom: 1em;
+}
+
+nav {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #605d5d;
+}
+
+a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  color: bisque;
+}
+
+li {
+  list-style: none;
+}
+
+.books {
+  display: flex;
+  text-align: left;
+  gap: 1rem;
+  margin-bottom: 1em;
+}
+
+form {
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form label {
+  margin-bottom: 0.5rem;
+  margin-left: 0;
+}
+
+form input {
+  width: 200px;
+  margin-bottom: 2em;
+  padding: 0.3em;
+}
+
+form input[type="submit"] {
+  width: 150px;
+  background-color: antiquewhite;
+  color: #2e2e2e;
+  font-weight: bold;
+  padding: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+  background-color: bisque;
+}
+
+.detail {
+  font-weight: 400;
+}
+
+/* Users */
+.container {
+  text-align: left;
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 1200px;
+  margin: 0 auto;
+  gap: 10px;
+}
+
+.item {
+  border: 1px solid #fff;
+  border-radius: 5px;
+  padding: 20px;
+  flex: 1 1 29%;
+  max-width: 29%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.item h4,
+.item p {
+  margin-bottom: 0.8em;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  gap: 5px;
+}
+
+.actions a,
+.actions input {
+  font-weight: bold;
+  height: 30px;
+  width: 130px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  background-color: beige;
+  color: #2e2e2e;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.userview {
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.actions .details-btn {
+  color: rgb(7, 113, 36);
+  border-radius: 5px;
+}
+
+.actions .delete-btn, input .delete-btn {
+  color: brown;
+}
