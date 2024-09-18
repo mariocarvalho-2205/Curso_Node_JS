@@ -1,0 +1,74 @@
+<h1>Editando {{user.name}}</h1>
+<form action="/users/update" method="POST">
+	<input type="hidden" name="id" value={{user.id}}/>
+	<div class="form-control">
+		<label for="name">Nome:</label>
+		<input
+			type="text"
+			name="name"
+			id="name"
+			placeholder="Insira seu nome"
+			value={{user.name}}
+		/>
+
+	</div>
+	<div class="form-control">
+		<label for="ocupation">Ocupação:</label>
+		<input
+			type="text"
+			name="ocupation"
+			id="ocupation"
+			placeholder="Insira sua profissão"
+			value={{user.ocupation}}
+		/>
+
+	</div>
+	<div class="form-checkbox">
+        {{#if user.newsletter}}
+		<input type="checkbox" name="newsletter"  checked />
+        {{else}}
+		<input type="checkbox" name="newsletter" />
+        {{/if}}
+		<label for="newsletter">Receber promoções?</label>
+	</div>
+	<input type="submit" value="Editar" />
+</form>
+<div class="addres-container">
+<h2>Endereços:</h2>
+<form action="/address/create" method="POST" >
+	<input type="hidden" name="UserId" value={{user.id}}>
+    <div class="form-control">
+        <label for="rua">Rua:</label>
+        <input type="text" name="rua"  placeholder="Insira sua Rua">
+        
+    </div>
+    <div class="form-control">
+        <label for="numero">Numero:</label>
+        <input type="text" name="numero"  placeholder="Insira o numero">
+
+    </div>
+    <div class="form-control">
+        <label for="bairro">Bairro:</label>
+        <input type="text" name="bairro"  placeholder="Insira o Bairro">
+
+    </div>
+
+    <input type="submit" value="Inserir Endereço">
+</form>
+<div class="address-list">
+	<h1>Lista de endereços</h1>
+	{{#each user.Addresses}}
+		<div>
+			#{{this.id}} - 
+			{{this.rua}} - 
+			{{this.numero}} - 
+			{{this.bairro}}
+			<form action="/address/delete" method="POST">
+				<input type="hidden" name="UserId" value={{this.UserId}}>
+				<input type="hidden" name="id" value={{this.id}}>
+				<input type="submit" value="Excluir Endereço">
+			</form>
+		</div>
+	{{/each}}
+</div>
+</div>
