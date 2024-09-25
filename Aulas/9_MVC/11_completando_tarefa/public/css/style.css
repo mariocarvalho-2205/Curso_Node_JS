@@ -1,0 +1,153 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Helvetica";
+}
+
+body {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+}
+
+h1 {
+  margin: 1rem 0;
+}
+
+.container {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-width: 450px;
+  margin: 2em auto;
+  gap: 10px;
+}
+
+#navbar {
+  border-bottom: 1px solid #fff;
+  padding: 1em 2em;
+  margin-bottom: 1em;
+  background-color: #db4c3f;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#navbar ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+}
+
+#navbar ul li {
+  margin-left: 1em;
+}
+
+#navbar ul li a {
+  text-decoration: none;
+  color: #fff;
+}
+
+#navbar li a:hover {
+  color: rgb(201, 138, 62);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.form-control {
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.form-control label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.form-control input,
+.form-control textarea {
+  border: 1px solid #000;
+  margin-bottom: 1em;
+  border-radius: 10px;
+  padding: 7px;
+  width: 200px;
+}
+
+form input[type="submit"] {
+  width: 150px;
+  background-color: #db4c3f;
+  color: #ffffff;
+  font-weight: bold;
+  padding: 0.7em 1.5em;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+}
+
+form input[type="submit"]:hover {
+  background-color: rgb(250, 183, 183);
+}
+
+.task-list {
+  list-style: none;
+  margin-top: 1em;
+}
+
+.task-list li {
+  margin-bottom: 1em;
+  padding: 0.5em;
+  border-bottom: 1px solid #dddcdc;
+  display: flex;
+  justify-content: space-between;
+}
+
+.task-list .title {
+  font-weight: bold;
+  color: #db4c3f;
+  transition: 0.5s;
+  font-size: 1.2em;
+}
+
+.task-list .title:hover {
+  color: #333;
+}
+
+.title.done {
+  text-decoration: line-through;
+  color: rgb(239, 231, 231);
+}
+.task-list li a {
+  text-decoration: none;
+}
+
+.actions {
+  display: flex;
+}
+
+.actions i {
+  font-size: 1.5em;
+  margin-right: 0.6em;
+  color: #333;
+}
+
+.actions i:hover {
+  color: #db4c3f;
+}
+
+.actions form {
+  margin: 0;
+}
+
+.actions button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
