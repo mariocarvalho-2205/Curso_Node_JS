@@ -13,6 +13,12 @@ const port = 3000
 
 const db = require('./db/db')
 
+const router = require('./routes/routes')
+
+// models
+const User = require('./models/User')
+const Tought = require('./models/Tought')
+
 // recebe resposta do body
 app.use(express.urlencoded({
     extended: true
@@ -23,7 +29,13 @@ app.use(express.json())
 app.engine('handlebars', exphbs.engine())
 app.set('view engine', 'handlebars')
 
+
+
+// public
+app.use(express.static('public'))
+
 // config do session middware
+// responsavel por dizer onde o express vai salvar a sessão
 app.use(
     session({
         name: 'session',
@@ -34,16 +46,31 @@ app.use(
             lofFn: function() {},
             path: require('path').join(require('os').tmpdir(), 'session'),
         }),
+        // configuração para salvar o cookie no pc do usuario
+        // inclui o tempo em que fica ativo e o tempo que expira
         cookie: {
             secure: false,
-            maxAge: 3600000, // 1 hora,
+            maxAge: 3600000, // 1 dia,
             expires: new Date(Date.now() + 360000),
+            // aqui configuramos para usar com http
             httpOnly: true
             },
 
     }),
 )
 
+// configurando a flash message
+app.use(flash())
+
+// set session to res
+// configura a resposta vinda do banco
+app.use((req, res, next) => {
+    if (req.session.userid) {
+        res.locals.session = req.session
+    }
+
+    next()
+})
 
 db.sync()
 .then(() => {
