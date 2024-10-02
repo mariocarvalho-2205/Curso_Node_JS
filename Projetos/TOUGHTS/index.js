@@ -13,11 +13,17 @@ const port = 3000
 
 const db = require('./db/db')
 
-const router = require('./routes/routes')
-
 // models
 const User = require('./models/User')
 const Tought = require('./models/Tought')
+
+// import Routes
+const toughtsRoutes = require('./routes/toughtsRoutes')
+const authRoutes = require('./routes/authRoutes')
+
+// Import Controller
+const ToughtsController = require('./controllers/ToughtController')
+
 
 // recebe resposta do body
 app.use(express.urlencoded({
@@ -71,6 +77,12 @@ app.use((req, res, next) => {
 
     next()
 })
+
+// Routes
+app.use('/toughts', toughtsRoutes)
+app.use('/', authRoutes)
+// import controller
+app.get('/', ToughtsController.showToughts)
 
 db.sync()
 .then(() => {
