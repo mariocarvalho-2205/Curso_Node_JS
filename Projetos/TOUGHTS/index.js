@@ -65,7 +65,7 @@ app.use(
     }),
 )
 
-// configurando a flash message
+// habilitando a flash message de erros que serao recebidos no front
 app.use(flash())
 
 // set session to res
@@ -84,7 +84,9 @@ app.use('/', authRoutes)
 // import controller
 app.get('/', ToughtsController.showToughts)
 
-db.sync()
+db
+.sync()
+//.sync({ force: true })
 .then(() => {
     app.listen(port, () => {
         console.info(`TOUGHTS conectou na porta ${port}`)
