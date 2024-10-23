@@ -38,6 +38,15 @@ module.exports = class ToughtsController {
         res.render('toughts/dashboard', {toughts, emptyToughts})
     }
 
+    static editToughts(req, res) {
+        res.render('toughts/edit')
+    }
+
+    static async editToughtsSave (req, res) {
+        const { id, tought } = req.body
+        console.log(id, tought)
+    }
+
     static createToughts(req, res) {
         res.render('toughts/create')
     }
@@ -86,9 +95,9 @@ module.exports = class ToughtsController {
 
     }
 
-    // static editeditToughts (req, res) {
-    //     res.render('toughts/edit')
-    // }
+    static editToughts (req, res) {
+        res.render('toughts/edit')
+    }
 
     static async removeToughts (req, res) {
         // pegando id da rota
