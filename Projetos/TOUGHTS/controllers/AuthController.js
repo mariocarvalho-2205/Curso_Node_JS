@@ -31,6 +31,7 @@ module.exports = class AuthController {
 
 		// initialize session
 		req.session.userid = user.id;
+		
 
 		req.flash("message", "Autenticação realizada com sucesso!");
 
