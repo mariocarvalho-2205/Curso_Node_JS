@@ -1,126 +1,122 @@
-const Tought = require('../models/Tought')
-const User = require('../models/User')
+const Tought = require("../models/Tought");
+const User = require("../models/User");
 
 module.exports = class ToughtsController {
-    static async showToughts(req, res) {
-        await res.render('toughts/home')
-    }
-    
-    static async dashboard (req, res) {
-        const userid = req.session.userid
+	static async showToughts(req, res) {
 
-        // verificando se usuario existe
-        const user = await User.findOne({
-            where: {
-                id: userid
-            },
-            include: Tought,  // recebe os oensamento que tem o usuario incluso
-            plain: true, // recebe so os dados interessantes
-        })
+        const toughtsData = await Tought.findAll({
+			include: User,  // carrega os dados da tabela User
+		})
 
-        if(!user) {
-            res.redirect('/login')
-        }
+		// o metodo get do result junta os dados das duas tabelas em um unico objeto
+		const toughts = toughtsData.map((result) => result.get({plain: true}));
 
-        // tratando os dados para rec3eber somente o dataValues
+        console.log(toughts)
+		res.render("toughts/home", {toughts});
+	}
 
-        const toughts = user.Toughts.map((result) => result.dataValues)
+	static async dashboard(req, res) {
+		const userid = req.session.userid;
 
-        let emptyToughts = false
+		// verificando se usuario existe
+		const user = await User.findOne({
+			where: {
+				id: userid,
+			},
+			include: Tought, // recebe os oensamento que tem o usuario incluso
+			plain: true, // recebe so os dados interessantes
+		});
 
-        if (toughts.length === 0 ) {
-            emptyToughts = true
-        }
+		if (!user) {
+			res.redirect("/login");
+		}
 
-        console.table(toughts)
+		// tratando os dados para rec3eber somente o dataValues
 
+		const toughts = user.Toughts.map((result) => result.dataValues);
 
-        res.render('toughts/dashboard', {toughts, emptyToughts})
-    }
+		let emptyToughts = false;
 
-    static editToughts(req, res) {
-        res.render('toughts/edit')
-    }
+		if (toughts.length === 0) {
+			emptyToughts = true;
+		}
 
-    static async editToughtsSave (req, res) {
-        const { id, tought } = req.body
-        console.log(id, tought)
-    }
+		console.table(toughts);
 
-    static createToughts(req, res) {
-        res.render('toughts/create')
-    }
+		res.render("toughts/dashboard", { toughts, emptyToughts });
+	}
 
-    static async createToughtsSave(req, res) {
-        const tought = {
-            title: req.body.title,
-            UserId: req.body.UserId
-        }
+	static createToughts(req, res) {
+		res.render("toughts/create");
+	}
 
-        console.log( tought)
+	static async createToughtsSave(req, res) {
+		try {
+			const tought = {
+				title: req.body.title,
+				UserId: req.session.userid,
+			};
+			console.log(tought);
+			await Tought.create(tought);
+
+			req.flash("message", "Pensamento criado com sucesso!");
+
+			req.session.save(() => {
+				res.redirect("/toughts/dashboard");
+			});
+		} catch (error) {
+			console.log(error, "error no createtoughtsave");
+		}
+	}
+
+	static editToughts(req, res) {
+		res.render("toughts/edit");
+	}
+
+	static async removeToughts(req, res) {
+		// pegando id da rota
+		const id = req.body.id;
+		const UserId = req.session.userid;
+
+		try {
+			await Tought.destroy({
+				where: { id: id, UserId: UserId },
+			});
+
+			req.flash("message", "Pensamento removido com sucesso!");
+
+			req.session.save(() => {
+				res.redirect("/toughts/dashboard");
+			});
+		} catch (error) {
+			console.log(error);
+		}
+
+		console.log(id);
+	}
+
+	static async updateTought(req, res) {
+		const id = req.params.id;
+
+		const tought = await Tought.findOne({ where: { id: id }, raw: true });
+
+		res.render("toughts/edit", { tought });
+	}
+
+	static async updateToughtSave(req, res) {
+		const { id, title } = req.body;
+
+		const tought = { title };
+
         try {
-            await Tought.create(tought)
-            console.log('pensamento inserido com sucesso')
-            req.flash('message', 'Pensamento criado com sucesso!')
-            
-            req.session.save(() => {
-                res.redirect('/toughts/dashboard')
-            })
-
-        } catch (error) {
-            console.error("Erro no create Tought Save", error)
-        }
-    }
-
-    static async createToughtsSave(req, res) {
-        
-        try {
-            const tought = {
-                title: req.body.title,
-                UserId: req.session.userid
-            }
-            console.log(tought)
-            await Tought.create(tought)
-    
-
-            req.flash('message', 'Pensamento criado com sucesso!')
+            await Tought.update(tought, { where: { id: id } });
+            req.flash("message", "Pensamento atualizado com sucesso!");
     
             req.session.save(() => {
-                res.redirect('/toughts/dashboard')
-            })
-            
-        } catch (error) {
-            console.log(error, 'error no createtoughtsave')
+                res.redirect("/toughts/dashboard");
+            });
+            } catch (error) {
+            console.log(error);
         }
-
-    }
-
-    static editToughts (req, res) {
-        res.render('toughts/edit')
-    }
-
-    static async removeToughts (req, res) {
-        // pegando id da rota
-        const id = req.body.id
-        const UserId = req.session.userid
-
-        try {
-            await Tought.destroy({
-                where: {id: id, UserId: UserId}
-            })
-
-            req.flash('message', 'Pensamento removido com sucesso!')
-    
-            req.session.save(() => {
-                res.redirect('/toughts/dashboard')
-            })
-
-
-        } catch (error) {
-            console.log(error)
-        }
-
-
-        console.log(id)
-    }
-}
+	}
+};
