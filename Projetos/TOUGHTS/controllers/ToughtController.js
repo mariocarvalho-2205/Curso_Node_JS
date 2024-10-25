@@ -1,18 +1,49 @@
 const Tought = require("../models/Tought");
 const User = require("../models/User");
 
+const { Op } = require('sequelize')
+
 module.exports = class ToughtsController {
 	static async showToughts(req, res) {
+// inicia variavel para pegar a query
+		let search = ''
+
+		// verifica se existe query
+		if(req.query.search) {
+			// se tiver atribui o valor dela a variavél
+			search = req.query.search
+		}
+
+		let order = 'DESC'
+
+		if (req.query.order === 'old') {
+			order = 'ASC'
+		} else {
+			order = 'DESC'
+		}
 
         const toughtsData = await Tought.findAll({
 			include: User,  // carrega os dados da tabela User
+			// cria a condição de pesquisa na requisição
+			where: {
+				// o valor do campo search e passado dinamicamente para o Op.like
+				title: { [ Op.like ]: `%${search}%`}
+			},
+			order: [['createdAt', order]]
+			
 		})
 
 		// o metodo get do result junta os dados das duas tabelas em um unico objeto
 		const toughts = toughtsData.map((result) => result.get({plain: true}));
 
-        console.log(toughts)
-		res.render("toughts/home", {toughts});
+		let toughtsQty = toughts.length
+
+		// converte o valor da quantidade para booleano por conta do handlebars
+		if (toughtsQty === 0) {
+			toughtsQty = false
+		}
+        // console.log(toughts)
+		res.render("toughts/home", {toughts, search, toughtsQty});
 	}
 
 	static async dashboard(req, res) {
@@ -41,7 +72,7 @@ module.exports = class ToughtsController {
 			emptyToughts = true;
 		}
 
-		console.table(toughts);
+		// console.table(toughts);
 
 		res.render("toughts/dashboard", { toughts, emptyToughts });
 	}
