@@ -1,0 +1,112 @@
+* {
+	font-family: Helvetica;
+	margin: 0;
+	padding: 0;
+	background-color: #333;
+	color: #fff;
+}
+
+/* NAVBAR */
+#navbar {
+	padding: 1.2em 1.4em;
+	margin-bottom: 1em;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid #333;
+}
+
+#navbar ul {
+	display: flex;
+	list-style: none;
+}
+
+#navbar ul li {
+	margin-left: 1.6em;
+}
+
+#navbar ul li a {
+	text-decoration: none;
+	transition: 0.5s;
+	font-weight: bold;
+}
+
+.container {
+	padding: 2em;
+}
+
+.container h1 {
+	margin-bottom: 1em;
+}
+
+.container form {
+	max-width: 300px;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+  }
+  .form-control {
+	margin-top: 1em;
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+  }
+  
+  .form-control label {
+	font-weight: bold;
+	margin-bottom: 0.5rem;
+  }
+  
+  .form-control input,
+  .form-control textarea {
+	border: 1px solid #000;
+	margin-bottom: 1em;
+	border-radius: 10px;
+	padding: 7px;
+	width: 200px;
+  }
+  
+  form input[type="submit"],
+  .btn {
+	width: 150px;
+	background-color: #db4c3f;
+	color: #ffffff;
+	font-weight: bold;
+	padding: 0.7em 1.5em;
+	border-radius: 5px;
+	cursor: pointer;
+	border: none;
+  }
+  
+  form input[type="submit"]:hover {
+	background-color: rgb(250, 183, 183);
+  }
+
+  .products {
+	display: flex;
+	flex-wrap: wrap;
+  }
+
+  .title-product {
+	text-align: center;
+	margin-bottom: 1em;
+  }
+  .product {
+	width: 23%;
+	margin: 1%;
+	text-align: center;
+	margin-bottom: 1em;
+  }
+
+  .product img {
+	max-width: 100%;
+	
+	margin-bottom: 0.5em;
+  }
+
+  .product h3 {
+	margin-bottom: 1em;
+  }

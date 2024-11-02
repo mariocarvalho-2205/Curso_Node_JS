@@ -1,9 +1,10 @@
 const conn = require('../db/conn')
 
 class Product {
-    constructor(name, price, description) {
-        this.name= name
+    constructor(name, price, urlImage,  description) {
+        this.name = name
         this.price = price
+        this.urlImage = urlImage
         this.description = description
     }
 
@@ -11,6 +12,7 @@ class Product {
         const product = await conn.db().collection('products').insertOne({
             name: this.name,
             price: this.price,
+            urlImage: this.urlImage,
             description: this.description
         })
 
