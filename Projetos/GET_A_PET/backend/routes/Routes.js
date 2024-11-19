@@ -1,16 +1,16 @@
 const express = require('express')
 const router = express.Router()
 
-const usersRoutes = require('./usersRoutes')
-const petsRoutes = require('./petsRoutes')
+const usersRoutes = require('./UsersRoutes')
+const petsRoutes = require('./PetsRoutes')
 
-router.use('/api/users', usersRoutes)
-router.use('/api/pets', petsRoutes)
+router.use('/users', usersRoutes)
+router.use('/pets', petsRoutes)
 
-router.get('/api/pets/test', (req, res) => {
+router.get('/pets/test', (req, res) => {
     res.json({message: "Rota test PET OK"})
 }) 
-router.get('/api/users/test', (req, res) => {
+router.get('/users/test', (req, res) => {
     res.json({ message: "Rota test User OK"})
 }) 
 

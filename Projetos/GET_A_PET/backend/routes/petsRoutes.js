@@ -1,5 +1,4 @@
-const express = require('express')
-const router = express.Router()
+const router = require('express').Router()
 
 // Rotas Pets
 router.get('/all', (req, res) => {
