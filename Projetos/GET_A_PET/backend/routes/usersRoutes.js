@@ -7,6 +7,7 @@ router.get('/all', (req, res) => {
 })
 
 router.post('/register', UserController.register)
+router.post('/login', UserController.login)
 
 
 

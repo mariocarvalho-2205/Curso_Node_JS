@@ -92,6 +92,48 @@ const register = async (req, res) => {
     }
 }
 
+const login = async (req, res) => {
+    const { email, password } = req.body
+
+    if (!email) {
+        res.status(422).json({ message: "O email é pbrigatório!"})
+        return
+    }
+
+    if (!isValidEmail) {
+        res.status(422).json({ message: "O email precisa ser um email valido!" })
+        return
+    }
+
+    if (!password) {
+        res.status(422).json({ message: "A senha é obrigatória!" })
+        return
+    }
+
+    if (password.length < 6) {
+        res.status(422).json({ message: "A senha precisa ter no minimo 6 caracteres!" })
+        return
+    }
+
+    // Check if user exists - verifico se usuario existe
+    const user = await User.findOne({ email: email })
+    if (!user) {
+        res.status(422).json({ message: "Não há usuario cadastrado com esse email!" })
+        return
+    }
+
+    const chechPassword = await bcrypt.compare(password, user.password)
+
+    if (!chechPassword) {
+        res.status(422).json({ message: "Senha invalida!"})
+        return
+    }
+
+    await createUserToken(user, req, res)
+
+}
+
 module.exports = {
-    register
+    register,
+    login
 }
