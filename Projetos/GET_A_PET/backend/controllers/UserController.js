@@ -15,7 +15,7 @@ function isValidEmail(email) {
   }
 
 const register = async (req, res) => {
-    const { name, email, phone, password, confirmpassword} = req.body
+    const { name, email, phone, password, confirmpassword, image} = req.body
 
 
     // Validations
@@ -77,7 +77,8 @@ const register = async (req, res) => {
         name,
         email,
         phone,
-        password: passwordHash
+        password: passwordHash,
+        image
     })
 
     try {
@@ -133,7 +134,21 @@ const login = async (req, res) => {
 
 }
 
+const checkUser = async (req, res) => {
+    let currentUser
+
+    console.log(req.headers.authorization)
+
+    if (req.headers.authorization) {
+    } else {
+        currentUser = null
+    }
+
+    res.status(200).send(currentUser)
+}
+
 module.exports = {
     register,
-    login
+    login,
+    checkUser
 }
