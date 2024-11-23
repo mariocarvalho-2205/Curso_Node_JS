@@ -164,8 +164,21 @@ const checkUser = async (req, res) => {
 	res.status(200).send(currentUser)
 }
 
+const getUserById = async (req, res) => {
+	const { id } = req.params
+	const user = await User.findById(id).select("-password")  // select com o nome do campo para nao exibir ele com sinal de menos na frente
+
+	if (!user) {
+		res.status(422).json({ message: "Usuario não encontrado!"})
+		return
+	}
+
+	res.status(200).json({user})
+}
+
 module.exports = {
 	register,
 	login,
-	checkUser
+	checkUser,
+	getUserById
 };

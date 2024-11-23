@@ -9,6 +9,7 @@ router.get('/all', (req, res) => {
 router.post('/register', UserController.register)
 router.post('/login', UserController.login)
 router.get('/checkuser', UserController.checkUser)
+router.get('/:id', UserController.getUserById)
 
 
 
