@@ -176,9 +176,14 @@ const getUserById = async (req, res) => {
 	res.status(200).json({user})
 }
 
+const editUser = async (req, res) => {
+	res.status(200).json({message: "Usuario atualizado!"})
+}
+
 module.exports = {
 	register,
 	login,
 	checkUser,
-	getUserById
+	getUserById,
+	editUser
 };
