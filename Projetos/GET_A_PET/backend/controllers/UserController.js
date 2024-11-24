@@ -1,4 +1,5 @@
 const createUserToken = require("../helpers/create-user-token");
+const getUserByToken = require("../helpers/get-user-by-token");
 const getToken = require("../helpers/get-token");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
@@ -147,43 +148,136 @@ const login = async (req, res) => {
 };
 
 const checkUser = async (req, res) => {
-	let currentUser
+	let currentUser;
 
 	if (req.headers.authorization) {
-		const token = getToken(req)
+		const token = getToken(req);
 		// console.log("Token in controller", token)
-		const decoded = jwt.verify(token, 'nossosecret')
+		const decoded = jwt.verify(token, "nossosecret");
 		// console.log(decoded.id)
-		currentUser = await User.findById(decoded.id)
+		currentUser = await User.findById(decoded.id);
 		// console.log(currentUser)
-		currentUser.password = undefined
+		currentUser.password = undefined;
 	} else {
-		currentUser = null
+		currentUser = null;
 	}
 
-	res.status(200).send(currentUser)
-}
+	res.status(200).send(currentUser);
+};
 
 const getUserById = async (req, res) => {
-	const { id } = req.params
-	const user = await User.findById(id).select("-password")  // select com o nome do campo para nao exibir ele com sinal de menos na frente
+	const { id } = req.params;
+	const user = await User.findById(id).select("-password"); // select com o nome do campo para nao exibir ele com sinal de menos na frente
 
 	if (!user) {
-		res.status(422).json({ message: "Usuario não encontrado!"})
-		return
+		res.status(422).json({ message: "Usuario não encontrado!" });
+		return;
 	}
 
-	res.status(200).json({user})
-}
+	res.status(200).json({ user });
+};
 
 const editUser = async (req, res) => {
-	res.status(200).json({message: "Usuario atualizado!"})
-}
+	const { id } = req.params;
+
+	// check if user exists
+	const token = getToken(req);
+	const user = await getUserByToken(token);
+
+	const { name, email, password, confirmpassword, phone } = req.body;
+
+	let image = "";
+
+	// validations
+	if (!name) {
+		res.status(422).json({ message: "O nome é obrigatório!" });
+		return; // o return cancela o resto do codigo
+	}
+
+	user.name = name;
+
+	if (!email) {
+		res.status(422).json({ message: "O email é obrigatório!" });
+		return; // o return cancela o resto do codigo
+	}
+
+	// Check is email is valid
+	if (!isValidEmail(email)) {
+		res.status(422).json({
+			message: "O email precisa ser um email valido!",
+		});
+		return;
+	}
+
+	// check if has already taken
+	const userExists = await User.findOne({ email: email });
+
+	console.log(user.email, email, userExists);
+	if (user.email !== email && userExists) {
+		res.status(422).json({ message: "Por favor utilize outro email!" });
+		return;
+	}
+
+	user.email = email;
+
+	if (!phone) {
+		res.status(422).json({ message: "O telefone é obrigatório!" });
+		return; // o return cancela o resto do codigo
+	}
+
+	user.phone = phone;
+
+	// if (!password) {
+	// 	res.status(422).json({ message: "A senha é obrigatória!" });
+	// 	return; // o return cancela o resto do codigo
+	// }
+
+	// if (password.length < 6) {
+	// 	res.status(422).json({
+	// 		message: "A senha precisa ter no minimo 6 caracteres!",
+	// 	});
+	// 	return;
+	// }
+
+	if (!confirmpassword) {
+		res.status(422).json({
+			message: "A confirmação da senha é obrigatória!",
+		});
+		return; // o return cancela o resto do codigo
+	}
+
+	if (password !== confirmpassword) {
+		res.status(422).json({
+			message: "A senha e a confirmação de senha precisam ser iguais",
+		});
+		return; // o return cancela o resto do codigo
+	} else if (password === confirmpassword && password != null) {
+		// create a password
+		// 1 - criamos o salto com a quantidade de caracteres que serao encriptados
+		const salt = await bcrypt.genSalt(12);
+		// 2 - criamos a senha passando a senha do usuario e o salt
+		const passwordHash = await bcrypt.hash(password, salt);
+
+		user.password = passwordHash;
+	}
+
+	try {
+		const updatedUser = await User.findOneAndUpdate(
+			{ _id: user._id },
+			{ $set: user },
+			{ new: true }
+		);
+
+		res.status(200).json({message: "Usuario atualizado com sucesso!"})
+	} catch (error) {
+		res.status(200).json({ message: error });
+	}
+};
 
 module.exports = {
 	register,
 	login,
 	checkUser,
 	getUserById,
-	editUser
+	editUser,
 };
