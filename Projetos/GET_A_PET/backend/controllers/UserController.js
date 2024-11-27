@@ -186,7 +186,10 @@ const editUser = async (req, res) => {
 
 	const { name, email, password, confirmpassword, phone } = req.body;
 
-	let image = "";
+
+	if (req.file) {
+		user.image = req.file.filename
+	}
 
 	// validations
 	if (!name) {
@@ -270,7 +273,7 @@ const editUser = async (req, res) => {
 
 		res.status(200).json({message: "Usuario atualizado com sucesso!"})
 	} catch (error) {
-		res.status(200).json({ message: error });
+		res.status(500).json({ message: error });
 	}
 };
 

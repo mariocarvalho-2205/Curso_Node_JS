@@ -3,6 +3,7 @@ const UserController = require('../controllers/UserController')
 
 // middlewares
 const verifyToken = require('../helpers/verify-token')
+const { imageUpload } = require('../helpers/image-upload')
 
 // Rotas Users
 router.get('/all', (req, res) => {
@@ -13,7 +14,7 @@ router.post('/register', UserController.register)
 router.post('/login', UserController.login)
 router.get('/checkuser', UserController.checkUser)
 router.get('/:id', UserController.getUserById)
-router.patch('/edit/:id', verifyToken , UserController.editUser)
+router.patch('/edit/:id', verifyToken, imageUpload.single('image'), UserController.editUser)
 
 
 
