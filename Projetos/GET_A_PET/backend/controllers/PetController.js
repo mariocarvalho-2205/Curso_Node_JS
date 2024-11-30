@@ -1,9 +1,63 @@
 const Pet = require('../models/Pet')
 
-const create = async (req, res) => {
-    const { name, age, weight, color, images, available } = req.body
+// helpers
+const getToken = require('../helpers/get-token')
+const getUserByToken = require('../helpers/get-user-by-token')
 
-    await res.status(200).json({message: `tudo ok! ${name}`})
+const create = async (req, res) => {
+    const { name, age, weight, color, images } = req.body
+    const available = true
+
+    // images uploads
+
+    // validation
+    if (!name) {
+        res.status(422).json({message: "O nome é obrigatório!"})
+        return
+    }
+    if (!age) {
+        res.status(422).json({message: "A idade é obrigatória!"})
+        return
+    }
+    if (!weight) {
+        res.status(422).json({message: "O peso é obrigatório!"})
+        return
+    }
+    if (!color) {
+        res.status(422).json({message: "A cor é obrigatória!"})
+        return
+    }
+
+    // get user
+    const token = getToken(req)
+    const user = await getUserByToken(token)
+
+    // create pet
+    const pet = new Pet({
+        name, 
+        age, 
+        weight, 
+        color,
+        available,
+        images: [],
+        user: {
+            _id: user._id,
+            name: user.name,
+            image: user.image,
+            phone: user.phone
+        }
+    })
+
+    try {
+        
+        const newPet = await pet.save()
+
+        res.status(201).json({message: "Pet cadastrado com sucesso", newPet})
+
+
+    } catch (error) {
+        await res.status(500).json({message: "Algo deu errado", error})
+    }
 }
 
 module.exports = {
