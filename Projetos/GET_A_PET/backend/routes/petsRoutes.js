@@ -3,12 +3,12 @@ const PetController = require('../controllers/PetController')
 
 // middlewares
 const verifyToken = require('../helpers/verify-token')
+const { imageUpload }= require('../helpers/image-upload')
 
 // Rotas Pets
-router.get('/all', (req, res) => {
-    res.json({ message: "All pets Ok"})
-})
+router.get('/', PetController.getAll)
+router.get('/mypets', verifyToken, PetController.getAllUserPets)
 
-router.post('/create', verifyToken, PetController.create)
+router.post('/create', imageUpload.array('images'), verifyToken, PetController.create)
 
 module.exports = router
