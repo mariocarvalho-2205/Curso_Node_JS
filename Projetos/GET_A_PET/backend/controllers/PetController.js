@@ -3,6 +3,7 @@ const Pet = require("../models/Pet");
 // helpers
 const getToken = require("../helpers/get-token");
 const getUserByToken = require("../helpers/get-user-by-token");
+const ObjectId = require('mongoose').Types.ObjectId
 
 const getAll = async (req, res) => {
   try {
@@ -27,6 +28,21 @@ const getAllUserPets = async (req, res) => {
       .json({ message: "Lamento. Não foi possivel resgatar seus pets!", error });
   }
 };
+
+const getAllUserAdoptions = async (req, res) => {
+  // get user
+  const token = getToken(req);
+  const user = await getUserByToken(token);
+
+  try {
+    const pets = await Pet.find({ "adopter._id": user._id }).sort("-createdAt");
+    res.status(200).json({pets})
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Lamento. Não foi possivel resgatar seus pets!", error });
+  }
+}
 
 const create = async (req, res) => {
   const { name, age, weight, color } = req.body;
@@ -90,8 +106,32 @@ const create = async (req, res) => {
   }
 };
 
+const getPetById = async (req, res) => {
+  const id = req.params.id
+
+  if (!ObjectId.isValid(id)) {
+    res.status(422).json({message: "ID Invalido!"})
+    return
+  }
+
+  try {
+    const pet = await Pet.findById(id)
+    if (!pet) {
+      res.status(404).json({message: "Pet não encontrado!"})
+      return
+    }
+
+    res.status(200).json({message: "Pet encontrado!", pet})
+
+  } catch (error) {
+    res.status(500).json({message: "Error no getPetById", error})
+  }
+}
+
 module.exports = {
   create,
   getAll,
-  getAllUserPets
+  getAllUserPets,
+  getAllUserAdoptions,
+  getPetById
 };
