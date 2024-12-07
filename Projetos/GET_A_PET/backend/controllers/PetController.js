@@ -177,7 +177,7 @@ const removePetById = async (req, res) => {
 
 	try {
 		// const removePetById = await Pet.deleteOne({ _id: id });
-		await Pet.findByIdAndDelete(id)
+		await Pet.findByIdAndDelete(id);
 
 		res.status(200).json({
 			message: "Pet removido com sucesso!",
@@ -188,6 +188,100 @@ const removePetById = async (req, res) => {
 	}
 };
 
+const updatePet = async (req, res) => {
+	const { id } = req.params;
+	const { name, age, weight, color, available } = req.body;
+
+	// images uploads
+	const images = req.files;
+
+	const updatedData = {};
+
+	if (!ObjectId.isValid(id)) {
+		res.status(422).json({ message: "Id Invalido!!" });
+		return;
+	}
+
+	// check if pet exists
+	const pet = await Pet.findById(id);
+
+	// valida se pet existe
+	if (!pet) {
+		res.status(404).json({ message: "Pet não encontrado!" });
+		return;
+	}
+
+	// valida se pet tem usuario
+	if (!pet.user) {
+		res.status(401).json({
+			message: "O pet não está vinculado a um usuario!",
+		});
+		return;
+	}
+
+	// get user
+	const token = getToken(req);
+	const user = await getUserByToken(token);
+
+	// valida se usuario esta autenticado
+	if (!user) {
+		res.status(401).json({ message: "Usuario não autenticado!" });
+		return;
+	}
+
+	// valida se usuario e o mesmo do pet
+	if (pet.user._id.toString() !== user._id.toString()) {
+		res.status(422).json({
+			message: "Você não tem permissão para atualizar esse Pet!",
+		});
+		return;
+	}
+
+	// validation
+	if (!name) {
+		res.status(422).json({ message: "O nome é obrigatório!" });
+		return;
+	} else {
+		updatedData.name = name;
+	}
+	if (!age) {
+		res.status(422).json({ message: "A idade é obrigatória!" });
+		return;
+	} else {
+		updatedData.age = age;
+	}
+	if (!weight) {
+		res.status(422).json({ message: "O peso é obrigatório!" });
+		return;
+	} else {
+		updatedData.weight = weight;
+	}
+	if (!color) {
+		res.status(422).json({ message: "A cor é obrigatória!" });
+		return;
+	} else {
+		updatedData.color = color;
+	}
+	if (images.length === 0) {
+		res.status(422).json({ message: "A imagem é obrigatória!" });
+		return;
+	} else {
+		updatedData.images = [];
+		images.map((image) => {
+			updatedData.images.push(image.filename);
+		});
+	}
+
+	try {
+		await Pet.findByIdAndUpdate(id, updatedData);
+		res.status(200).json({ message: "Pet atualizado com sucesso" });
+	} catch (error) {
+		res.status(500).json({
+			message: "Houve algum erro ao atualizar o pet!",
+		});
+	}
+};
+
 module.exports = {
 	create,
 	getAll,
@@ -195,4 +289,5 @@ module.exports = {
 	getAllUserAdoptions,
 	getPetById,
 	removePetById,
+	updatePet,
 };
