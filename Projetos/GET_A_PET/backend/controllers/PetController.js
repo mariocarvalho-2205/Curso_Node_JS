@@ -282,6 +282,126 @@ const updatePet = async (req, res) => {
 	}
 };
 
+const schedule = async (req, res) => {
+	const { id } = req.params;
+
+	// check if pet exists
+	const pet = await Pet.findById(id);
+
+	// valida se pet existe
+	if (!pet) {
+		res.status(404).json({ message: "Pet não encontrado!" });
+		return;
+	}
+
+	// valida se pet tem usuario
+	if (!pet.user) {
+		res.status(401).json({
+			message: "O pet não está vinculado a um usuario!",
+		});
+		return;
+	}
+
+	// get user
+	const token = getToken(req);
+	const user = await getUserByToken(token);
+
+	// valida se usuario esta autenticado
+	if (!user) {
+		res.status(401).json({ message: "Usuario não autenticado!" });
+		return;
+	}
+
+	// valida se usuario e o mesmo do pet
+	if (pet.user._id.equals(user._id)) {
+		res.status(422).json({
+			message: "Você não pode agendar uma visita com seu proprio Pet!",
+		});
+		return;
+	}
+
+	if (pet.adopter) {
+		// verifica se ha adotante
+		if (pet.adopter._id.equals(user._id)) {
+			// verifica se ja foi agendado pelo usuario
+			res.status(422).json({
+				message: "Você já agendou uma visita para esse Pet!",
+			});
+			return;
+		}
+	}
+
+	pet.adopter = {
+		_id: user._id,
+		name: user.name,
+		image: user.image,
+	};
+
+	try {
+		await Pet.findByIdAndUpdate(id, pet);
+		res.status(200).json({
+			message: `Sua visita foi agendada com sucesso com ${pet.user.name}, entre em contato com ele através do numero ${pet.user.phone}`,
+		});
+	} catch (error) {
+		res.status(500).json({
+			message:
+				"Não foi possivel agendar sua visita. Por favor tente mais tarde!",
+		});
+	}
+};
+
+const concludeAdoption = async (req, res) => {
+	const { id } = req.params;
+
+	// check if pet exists
+	const pet = await Pet.findOne({ _id: id });
+
+	// valida se pet existe
+	if (!pet) {
+		res.status(404).json({ message: "Pet não encontrado!" });
+		return;
+	}
+
+	// valida se pet tem usuario
+	if (!pet.user) {
+		res.status(401).json({
+			message: "O pet não está vinculado a um usuario!",
+		});
+		return;
+	}
+
+	
+	// get user
+	const token = getToken(req);
+	const user = await getUserByToken(token);
+	
+	// valida se usuario esta autenticado
+	if (!user) {
+		res.status(401).json({ message: "Usuario não autenticado!" });
+		return;
+	}
+	
+	
+	// valida se usuario e o mesmo do pet
+	if (pet.user._id.toString() !== user._id.toString()) {
+		res.status(422).json({
+			message: "Você não agendou uma visita para esse Pet!",
+		});
+		return;
+	}
+
+
+	pet.available = false
+
+	try {
+		await Pet.findByIdAndUpdate(id, pet)
+		res.status(200).json({ message: "Parabens! Seu Pet foi adotado com sucesso!" });
+	} catch (error) {
+		res.status(500).json({ message: "Houve algum erro em finalizar o processo de adoção!" });
+		
+	}
+};
+
 module.exports = {
 	create,
 	getAll,
@@ -290,4 +410,6 @@ module.exports = {
 	getPetById,
 	removePetById,
 	updatePet,
+	schedule,
+	concludeAdoption,
 };
