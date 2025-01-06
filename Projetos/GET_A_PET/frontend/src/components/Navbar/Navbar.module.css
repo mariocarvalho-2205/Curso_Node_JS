@@ -1,0 +1,48 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1em 1.5em;
+    background-color: #ffd400;
+    color: #16479b;
+}
+
+.navbar_logo {
+    display: flex;
+    align-items: center;
+}
+
+.navbar_logo img {
+    width: 40px;
+    margin-right: 0.8em;
+}
+
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.navbar li,
+.navbar a {
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.5s;
+  padding: 0.5em 0.8em;
+  border-radius: 5px;
+}
+
+.navbar .inactive:hover,
+.navbar .active:hover {
+    background-color: #16479b;
+    color: #fff;
+}
+.active {
+  color: #484d01;
+}
+
+.inactive {
+  color: #16479b;
+}
