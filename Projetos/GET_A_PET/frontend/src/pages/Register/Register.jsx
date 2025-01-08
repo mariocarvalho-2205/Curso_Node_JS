@@ -1,15 +1,23 @@
-import styles from "./Register.module.css";
+import styles from "../../components/Input/Form.module.css";
 import Input from "../../components/Input/Input";
+import { Link } from 'react-router-dom'
+import { useState } from "react";
 
 const Register = () => {
+  const [ user, setUser ] = useState({})
 
   function handleChange (e) {
-
+      setUser({ ...user, [e.target.name]: e.target.value})
+    }
+    
+    function handleSubmit (e) {
+      e.preventDefault()
+      console.log(user)
   }
   return (
-    <section>
+    <section className={styles.form_container}>
       <h1>Register</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Input
           text="Nome"
           type="text"
@@ -40,13 +48,14 @@ const Register = () => {
         />
         <Input
           text="Confirme sua senha"
-          type="confirm-password"
-          name="confirm-password"
+          type="password"
+          name="confirmpassword"
           placeholder="Confirme sua senha"
           handleOnChange={handleChange}
         />
         <input type="submit" value="Cadastrar" />
       </form>
+      <p>Já tem conta? <Link to="/login">Clique aqui</Link></p>
     </section>
   );
 };

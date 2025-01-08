@@ -10,7 +10,7 @@ function Input({
   multiple,
 }) {
   return (
-    <div className={styles.input_container}>
+    <div className={styles.form_control}>
       <label htmlFor={name}>{text}:</label>
       <input
         type={text}
