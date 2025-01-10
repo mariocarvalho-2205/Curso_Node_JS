@@ -18,12 +18,20 @@ function isValidEmail(email) {
 
 const register = async (req, res) => {
 	const { name, email, phone, password, confirmpassword, image } = req.body;
+	console.log("backend", name)
+	console.log("Dados recebidos no registro:", req.body);
 
 	// Validations
 	if (!name) {
 		res.status(422).json({ message: "O nome é obrigatório!" });
 		return; // o return cancela o resto do codigo
 	}
+
+	if (name.length < 3) {
+		res.status(422).json({ message: "O nome precisa ter no minimo 3 caracteres!" });
+		return; // o return cancela o resto do codigo
+	}
+
 
 	if (!email) {
 		res.status(422).json({ message: "O email é obrigatório!" });

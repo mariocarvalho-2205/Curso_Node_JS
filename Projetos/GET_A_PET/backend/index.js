@@ -14,7 +14,7 @@ app.use(express.urlencoded({
 // Solve CORS - libera a porta para trabalhar com frontend e backend
 app.use(cors({
     credentials: true,
-    origin: 'http://localhost:3000'
+    origin: 'http://localhost:5173'
 }))
 
 // Public folder for images
