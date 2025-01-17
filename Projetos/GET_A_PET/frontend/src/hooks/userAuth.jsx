@@ -44,13 +44,28 @@ export default function useAuth() {
 
   async function authUser(data) {  // função para salvar o usuario no local storage e navegar para a rota barra
     setAutheticated(true)  // muda o estado do authenticated
-    localStorage.setItem("token", JSON.stringify(data.token))
+    localStorage.setItem("token", JSON.stringify(data.token))  //salva o token no localstorage
 
     navigate('/')
+  }
+
+  // logout funciont
+  function logout () {
+    // atualiza o estado das mensagens
+    const msgText = "Logout realizado com sucesso!"
+    const msgType = "sucess"
+    setFlashMessage(msgText, msgType)  // e envia a mensagem atualizada para a home
+
+    // muda o estado do authenticated e remove o token do local storage
+    setAutheticated(false)
+    localStorage.removeItem("token")
+    api.defaults.headers.Authorization = undefined  // e atribui o valor de undefined a api
+    navigate('/') // direciona para a home
   }
 
   return {
     authenticated,
     register,
+    logout
   };
 }
