@@ -16,7 +16,7 @@ const Register = () => {
     
     function handleSubmit (e) {
       e.preventDefault()
-      console.log("register", user)
+      // console.log("register", user)  // ok chegou
       register(user)
   }
   return (

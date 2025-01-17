@@ -23,7 +23,7 @@ const register = async (req, res) => {
 
 	// Validations
 	if (!name) {
-		res.status(422).json({ message: "O nome é obrigatório!" });
+		res.status(422).json({ message: ["O nome é obrigatório!"] });
 		return; // o return cancela o resto do codigo
 	}
 
