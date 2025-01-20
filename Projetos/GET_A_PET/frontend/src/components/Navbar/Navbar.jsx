@@ -29,6 +29,16 @@ const Navbar = () => {
 
 				{authenticated && authenticated ? (
 					<>
+					<li>
+							<NavLink
+								to="/user/profile"
+								className={({ isActive }) =>
+									isActive ? styles.active : styles.inactive
+								}
+							>
+								Profile
+							</NavLink>
+						</li>
 						<li onClick={logout}>Sair</li>
 					</>
 				) : (

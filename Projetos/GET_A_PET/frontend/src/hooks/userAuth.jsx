@@ -45,21 +45,21 @@ export default function useAuth() {
 	async function login(user) {
 		let msgText = "Login realizado com sucesso!";
 		let msgType = "sucess";
-    // console.log("login auth", user)  // chegou
+		// console.log("login auth", user)  // chegou
 
 		try {
 			const response = await api.post("/users/login", user);
 			const data = await response.data;
-      // console.log("data", data)  // chegou
+			// console.log("data", data)  // chegou
 
 			setFlashMessage(msgText, msgType); // aqui e passado a mensagem para o hook flashmessage
 
 			await authUser(data); // chama a função para salvar o usuario no local storage e navegar para a rota barra
 		} catch (error) {
-      console.log(error)
+			console.log(error)
 			msgText = error.response.data.message;
 			msgType = "error";
-      setFlashMessage(msgText, msgType)
+			setFlashMessage(msgText, msgType)
 		}
 	}
 
@@ -85,10 +85,36 @@ export default function useAuth() {
 		navigate("/");
 	}
 
+	async function update(user) {
+		// const msgText = "Usuário atualizado realizado com sucesso!";
+		// const msgType = "sucess";
+		// // console.log("User auth",user)  // ok chegou
+
+		// try {
+		// 	const response = await api.patch(`/users/edit/${user}`, user);
+		// 	const data = await response.data;
+
+		// 	setFlashMessage(msgText, msgType); // aqui e passado a mensagem para o hook flashmessage
+
+		// 	// console.log("contextoauth", data.token); // ok chegou
+
+		// 	await authUser(data); // chama a função para salvar o usuario no local storage e navegar para a rota barra
+		// } catch (error) {
+		// 	// console.error(error);  // ok chegou
+		// 	const msgText = error.response.data.message;
+		// 	const msgType = "error";
+		// 	setFlashMessage(msgText, msgType); // aqui e passado a mensagem para o hook flashmessage
+		// }
+		// // console.log("update auth", data) // chegou ok
+
+		
+	}
+
 	return {
 		authenticated,
 		register,
 		logout,
-    login
+		login,
+		update
 	};
 }
