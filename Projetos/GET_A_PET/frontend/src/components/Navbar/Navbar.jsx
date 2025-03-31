@@ -23,12 +23,22 @@ const Navbar = () => {
 							isActive ? styles.active : styles.inactive
 						}
 					>
-						Home
+						Adotar
 					</NavLink>
 				</li>
 
 				{authenticated && authenticated ? (
 					<>
+					<li>
+							<NavLink
+								to="/pet/mypets"
+								className={({ isActive }) =>
+									isActive ? styles.active : styles.inactive
+								}
+							>
+								Meus Pets
+							</NavLink>
+						</li>
 					<li>
 							<NavLink
 								to="/user/profile"

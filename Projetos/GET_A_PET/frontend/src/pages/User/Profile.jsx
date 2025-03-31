@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // manipula as urls e enviando o usuario para outra url ex: home
 
 import useFlashMessage from "../../hooks/useFlashMessage";
+import RoundedImage from "../../components/RoundedImage/RoundedImage";
 
 function Profile() {
   const [user, setUser] = useState({});
@@ -81,7 +82,7 @@ function Profile() {
       <div className={styles.profile_header}>
         <h1>Perfil</h1>
         {(user.image || preview) && (
-            <img src={preview ? URL.createObjectURL(preview) : `${import.meta.env.VITE_APP_API}/images/users/${user.image}`} alt={user.name}/>
+            <RoundedImage src={preview ? URL.createObjectURL(preview) : `${import.meta.env.VITE_APP_API}/images/users/${user.image}`} alt={user.name}/>
         )}
       </div>
       <form className={formStyles.form_container} onSubmit={handleSubmit}>

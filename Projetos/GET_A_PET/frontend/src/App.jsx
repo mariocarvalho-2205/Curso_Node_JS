@@ -15,6 +15,8 @@ import Message from "./components/Message/Message";
 
 // context
 import { UserProvider } from "./context/UseContext";
+import MyPets from "./pages/MyPet/MyPets";
+import AddPet from "./pages/AddPet/AddPet";
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/user/profile" element={<Profile />}/>
+            <Route path="/pet/mypets" element={<MyPets />}/>
+            <Route path="/pet/add" element={<AddPet />}/>
             <Route path="/" element={<Home />} />
           </Routes>
         </Container>
