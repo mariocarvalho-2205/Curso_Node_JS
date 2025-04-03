@@ -11,5 +11,5 @@ const teste = (titulo, esperado, retornado) => {
   }
 };
 // Testes
-teste("somaHorasExtras", 2500, somaHorasExtras(2000, 500));
-teste("calculoDescontos", 2200, calculoDescontos(2500, 300));
+teste("soma Horas Extras", 2500, somaHorasExtras(2000, 500));
+teste("calculo Descontos", 2200, calculoDescontos(2500, 300));
