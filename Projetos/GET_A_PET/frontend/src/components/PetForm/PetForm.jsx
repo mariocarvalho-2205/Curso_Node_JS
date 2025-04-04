@@ -9,7 +9,7 @@ const PetForm = ({ handleSubmit, petData, btnText }) => {
   const colors = ["Branco", "Preto", "Cinza", "Caramelo", "Mesclado"];
 
   function onFileChange(e) {
-    console.log(e.target.files)
+    // console.log(e.target.files)
     // utiliza o metodo array para poder pegar as images
     setPreview(Array.from(e.target.files))
     setPet({...pet, images: [...e.target.files]})
@@ -25,7 +25,7 @@ const PetForm = ({ handleSubmit, petData, btnText }) => {
 
   function submit(e) {
     e.preventDefault()
-    console.log(pet)
+    // console.log(pet)
     handleSubmit(pet)
   }
 

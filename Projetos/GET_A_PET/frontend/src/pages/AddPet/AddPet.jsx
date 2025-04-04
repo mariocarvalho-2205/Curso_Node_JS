@@ -28,7 +28,7 @@ const AddPet = () => {
       }
     })
 
-    console.log(JSON.parse(token))
+    // console.log(JSON.parse(token))
     const data = await api.post("pets/create", formData, {
       headers: {
         Authorization: `Bearer ${JSON.parse(token)}`,
