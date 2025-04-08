@@ -3,9 +3,15 @@ const somaHorasExtras = (salario, valorHorasExtras) =>
 
 const calculoDescontos = (salario, descontos) => salario - descontos;
 
-export {
-  somaHorasExtras,
-  calculoDescontos
+export { somaHorasExtras, calculoDescontos };
+
+const teste = (titulo, funcaoDeTeste) => {
+  try {
+    funcaoDeTeste();
+    console.log(`${titulo} passou!`);
+  } catch {
+    console.error(`${titulo} não passou!!!`);
+  }
 };
 
 // flag oara o jest com es6
