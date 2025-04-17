@@ -37,7 +37,7 @@ const PetForm = ({ handleSubmit, petData, btnText }) => {
           <img src={URL.createObjectURL(image)} alt={pet.name} key={`${pet.name}+${index}`} />
         ) 
         : pet.images && pet.images.map((image, index) => 
-          <img src={`${process.env.REACT_APP_API}/images/pets/${image}`} alt={pet.name} key={`${pet.name}+${index}`} />
+          <img src={`${import.meta.env.VITE_APP_API}/images/pets/${image}`} alt={pet.name} key={`${pet.name}+${index}`} />
         )}
       </div>
       <Input
@@ -67,7 +67,7 @@ const PetForm = ({ handleSubmit, petData, btnText }) => {
         text="Peso do Pet"
         type="number"
         name="weight"
-        placeholder="digite a idade"
+        placeholder="digite o peso"
         handleOnChange={handleChange}
         value={pet.weight || ""}
       />
