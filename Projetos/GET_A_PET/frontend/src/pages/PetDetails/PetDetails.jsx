@@ -1,5 +1,6 @@
 import styles from "./PetDetails.module.css";
 import api from "../../utils/api";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useFlashMessage from "../../hooks/useFlashMessage";
@@ -15,30 +16,41 @@ const PetDetails = () => {
       .get(`/pets/${id}`)
       .then((response) => {
         setPet(response.data.pet);
-        console.log(pet);
+        // console.log(pet);
       })
       .catch((err) => {});
   }, []);
 
-  async function schedule () {
-    let msgType = 'sucess'
+  async function schedule() {
+    let msgType = 'sucess';
 
-    const data = await api.patch(`pets/schedule/${pet._id}`, {
-        Authorization: `Bearer ${JSON.parse(token)}`
-    })
-    .then((response) => {
-        console.log(response.data)
-        return response.data
-    })
-    .catch((err) => {
-        console.log(err.response.data)
-        msgType = 'error'
-        return err.response.data
-    })
-
-    console.log(data.message, 'mesage')
-    setFlashMessage(data.message, msgType)
-  }
+    // Obter o token
+    const token = localStorage.getItem('token');
+    
+    try {
+        // Remover aspas extras se existirem
+        const cleanToken = token.startsWith('"') ? JSON.parse(token) : token;
+        
+        const response = await api.patch(
+            `pets/schedule/${pet._id}`, 
+            {}, // corpo vazio como segundo parâmetro
+            {
+                headers: {
+                    Authorization: `Bearer ${cleanToken}`
+                }
+            } // configuração como terceiro parâmetro
+        );
+        
+        console.log('Resposta:', response.data);
+        setFlashMessage(response.data.message, 'success');
+        return response.data;
+    } catch (err) {
+        console.log('Erro:', err.response?.data);
+        msgType = 'error';
+        setFlashMessage(err.response?.data?.message || 'Erro ao agendar visita', msgType);
+        return err.response?.data;
+    }
+}
   return (
     <>
       {pet.name && (

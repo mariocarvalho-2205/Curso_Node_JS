@@ -13,7 +13,7 @@ const Home = () => {
       .get("/pets")
       .then((response) => {
         setPets(response.data.pets);
-        console.log(pets);
+        // console.log(pets);
       })
       .catch((err) => {});
   }, []);
@@ -27,7 +27,7 @@ const Home = () => {
       <div className={styles.pet_container}>
         {pets.length > 0 &&
           pets.map((pet) => (
-            <div className={styles.pet_card}>
+            <div className={styles.pet_card} key={pet._id}>
               <div
                 style={{
                   backgroundImage: `url(${

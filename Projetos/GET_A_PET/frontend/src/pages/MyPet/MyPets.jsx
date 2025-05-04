@@ -22,6 +22,7 @@ const MyPets = () => {
       .then((response) => {
         // console.log("REsponse", response.data.pets[0])
         setPets(response.data.pets);
+        // console.log(pets)
       })
       .catch((err) => {
         console.log(err);
@@ -44,10 +45,31 @@ const MyPets = () => {
       })
       .catch((err) => {
         msgType = "error";
-        console.log(err);
+        // console.log(err);
         return err.response.data;
       });
     setFlashMessage(data.message, msgType);
+  }
+
+  async function concludeAdoption(id) {
+    let msgType = "sucess"
+
+    const data = await api.patch(`/pets/conclude/${id}`, {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(token)}`
+      }
+    })
+    .then((response) => {
+      // console.log(response)
+      return response.data
+    })
+    .catch((err) => {
+      msgType = "error"
+      // console.log(err)
+      return err.response.data
+    })
+
+    setFlashMessage(data.message, msgType)
   }
 
   return (
@@ -71,8 +93,8 @@ const MyPets = () => {
               <div className={styles.actions}>
                 {pet.available ? (
                   <>
-                    {pet.adopted && (
-                      <button className={styles.conclude_btn}>
+                    {pet.adopter && (
+                      <button className={styles.conclude_btn} onClick={() => {concludeAdoption(pet._id)}}>
                         Concluir adoção
                       </button>
                     )}

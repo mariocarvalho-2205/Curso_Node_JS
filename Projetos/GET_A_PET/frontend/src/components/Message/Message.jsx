@@ -8,19 +8,30 @@ const Message = () => {
   const [type, setType] = useState("");
 
   useEffect(() => {
-    bus.addListener('flash', ({message, type}) => {
-      setVisibility(true)  // torna a mensagem visivél
-      setMessage(message)  // carrega a variavel com a mensagem que chega do bus
-      setType(type)  // carrega a variavel com o tipo de mensagem
-      // console.log("message comp message", message)  // ok chegou
-
+    // Define a função handler fora do addListener para poder referenciá-la na remoção
+    const handleFlashMessage = ({message, type}) => {
+      setVisibility(true);  // torna a mensagem visível
+      setMessage(message);  // carrega a variável com a mensagem que chega do bus
+      setType(type);  // carrega a variável com o tipo de mensagem
+      
       // setTimeout para a mensagem sumir automaticamente
-      setTimeout(() => {
-        setVisibility(false)  // muda o estado do visibility para false depois de um tempo
-      }, 3000)
+      const timer = setTimeout(() => {
+        setVisibility(false);  // muda o estado do visibility para false depois de um tempo
+      }, 3000);
+      
+      // Este retorno não funciona aqui, ele deve estar no retorno do useEffect
+      return () => clearTimeout(timer);
+    };
 
-    })
-  }, [visibility])
+    // Adiciona o event listener
+    bus.addListener('flash', handleFlashMessage);
+
+    // Função de cleanup para remover o listener quando o componente for desmontado
+    return () => {
+      bus.removeListener('flash', handleFlashMessage);
+    };
+  }, []); // Array de dependências vazio para executar apenas na montagem e desmontagem
+
 
   return (
     visibility && (

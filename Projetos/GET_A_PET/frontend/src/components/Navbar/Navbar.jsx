@@ -29,7 +29,17 @@ const Navbar = () => {
 
 				{authenticated && authenticated ? (
 					<>
-					<li>
+						<li>
+							<NavLink
+								to="/pet/myadoptions"
+								className={({ isActive }) =>
+									isActive ? styles.active : styles.inactive
+								}
+							>
+								Minhas Adoções
+							</NavLink>
+						</li>
+						<li>
 							<NavLink
 								to="/pet/mypets"
 								className={({ isActive }) =>
@@ -39,7 +49,7 @@ const Navbar = () => {
 								Meus Pets
 							</NavLink>
 						</li>
-					<li>
+						<li>
 							<NavLink
 								to="/user/profile"
 								className={({ isActive }) =>
