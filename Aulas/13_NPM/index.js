@@ -32,5 +32,34 @@
 * procurando modulo pelo terminal
 ** npm search nome da lib
 
+* npm outdated - verifica quais dependencias estão atualizadas ou nao
+
+* Verificando e limpando o cache
+** npm cache verify - verifica o cache
+** npm cache clean --force -- força a limpeza do cache
+
+* Detectando falha de segurança no modulo vulnerabilidade
+** npm audit - retorna os alertas
+* Corrigindo a vulnerabilidade do modulo
+** npm audit fix -- caso de alguma que ele nao resolva
+** utilizamos o 
+** npm audit fix --force //! Não Recomendado
+
+* Pacotes npm View - visualiza dados do pacote
+
+* Acessando a documentação do pacote
+** npm docs pacote - direciona para a pagina do pacote
+
+* Home page do pacote
+** npm home pacote
+
+* Reduzindo duplicação do pacote
+** npm dedupe ou npm ddpd
+
+* intalando pacotes sem salvar nas dependencias
+** npm install axios --no-save
+
+* verificando scripts do projeto
+** npm run
 
 */
