@@ -7,9 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose",
     "tests": "node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles",
-    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles --watch",
+    "test:watch": "node --verbose --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles --watch",
     "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles --coverage"
   },
   "keywords": [],

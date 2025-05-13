@@ -11,8 +11,8 @@ carrinho.adiciona(new Item('Açaí', 3, 5));
 
 carrinho.adicionaFrete(15);
 
-carrinho.calculaSubtotal();
+carrinho.calculaTotal();
 
 carrinho.finalizaCompra();
 
-console.log(carrinho);
+// console.log(carrinho);

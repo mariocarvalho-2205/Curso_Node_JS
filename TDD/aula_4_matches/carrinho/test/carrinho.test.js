@@ -36,6 +36,7 @@ describe("Testes do carrinho", () => {
 
         // verifica se tem o item no array
         expect(carrinho.itens).toContain(item2);
+        expect(carrinho.itens).toContain(item);
     })
 
     it("Deve ter a propriedade 'total' na inicialização", () => {
