@@ -1,0 +1,11 @@
+{
+  "name": "tdd_luiz_tools",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Mario_Carvalho <mario.carvalho.ms@gmail.com>",
+  "license": "ISC",
+  "description": ""
+}
